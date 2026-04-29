@@ -35,7 +35,8 @@
             align-items: center;
         }
 
-        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-teal); }
+        .logo img { height: 60px; width: auto; display: block; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
         .logo span { color: var(--secondary-coral); }
 
         .swap-o-meter {
@@ -327,7 +328,7 @@
 
         @media (max-width: 768px) {
             .site-header { padding: 0.8rem 4%; }
-            .logo { font-size: 1.4rem; }
+            .logo img { height: 45px; }
             .swap-o-meter { font-size: 0.8rem; padding: 0.5rem 1rem; }
             
             .hero { padding: 5rem 5% 3rem; border-radius: 0 0 30px 30px; min-height: auto; }
@@ -466,7 +467,9 @@
 <body>
 
 <header class="site-header">
-    <div class="logo">Tabadla<span>.</span></div>
+    <a href="index.html" class="logo">
+        <img src="logo.png" alt="Tabadla Logo">
+    </a>
     <div style="display: flex; align-items: center; gap: 1.5rem;">
         <div class="swap-o-meter">
             <i class="fas fa-tint"></i> <span id="water-count">14,250</span>L Saved
@@ -757,7 +760,9 @@
 <footer class="site-footer">
     <div class="footer-grid">
         <div>
-            <div class="footer-logo">Tabadla<span>.</span></div>
+            <a href="index.html" class="footer-logo">
+                <img src="logo.png" alt="Tabadla Logo" style="height: 80px; filter: brightness(0) invert(1);">
+            </a>
             <p style="opacity: 0.7;">Multan's leading circular fashion exchange. Join the movement to save water and look great.</p>
             <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
                 <i class="fab fa-instagram fa-2x"></i>
