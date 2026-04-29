@@ -812,6 +812,8 @@
     searchBtn.addEventListener('click', () => {
         const query = searchInput.value.toLowerCase();
         const cards = document.querySelectorAll('.listing-card');
+        const grid = document.querySelector('.listing-grid');
+        
         cards.forEach(card => {
             const content = card.innerText.toLowerCase();
             if (content.includes(query)) {
@@ -820,6 +822,23 @@
                 card.style.display = 'none';
             }
         });
+
+        // Scroll to results
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (query === "") {
+            showToast('Showing all listings');
+        } else {
+            const visibleCount = Array.from(cards).filter(c => c.style.display !== 'none').length;
+            showToast(`Found ${visibleCount} items for "${query}"`);
+        }
+    });
+
+    // Enter key support for search
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchBtn.click();
+        }
     });
 
     function focusSearch() {
