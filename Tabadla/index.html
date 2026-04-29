@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabadla – Circular Fashion Exchange | Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-teal: #008080;
+            --secondary-coral: #FF7F50;
+            --bg-off-white: #F9F9F9;
+            --text-slate: #333333;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-off-white); color: var(--text-slate); font-family: 'Poppins', sans-serif; line-height: 1.6; overflow-x: hidden; }
+
+        .site-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-teal); }
+        .logo span { color: var(--secondary-coral); }
+
+        .swap-o-meter {
+            background: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1976d2;
+        }
+
+        .hero {
+            padding: 8rem 5%;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 128, 128, 0.9) 0%, rgba(0, 102, 102, 0.9) 100%), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            border-radius: 0 0 80px 80px;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 127, 80, 0.2) 0%, transparent 70%);
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -1px; line-height: 1.1; }
+        .hero p { font-size: 1.25rem; opacity: 0.95; margin-bottom: 2.5rem; }
+
+        .search-bar-glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem;
+            border-radius: 50px;
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .search-bar-glass input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar-glass input::placeholder { color: rgba(255,255,255,0.7); }
+
+        .search-bar-glass button {
+            background: var(--secondary-coral);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-bar-glass button:hover { transform: scale(1.05); background: #ff6b3d; }
+
+        .container { padding: 0 5%; max-width: 1200px; margin: 0 auto; }
+
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .listing-card {
+            background: var(--white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+        }
+
+        .listing-card:hover { 
+            transform: translateY(-15px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(0, 128, 128, 0.15);
+            border-color: rgba(0, 128, 128, 0.1);
+        }
+
+        .listing-img {
+            width: 100%;
+            height: 320px;
+            background: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .listing-img img { transition: 0.8s ease; }
+        .listing-card:hover .listing-img img { transform: scale(1.1); }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            color: #0ca678;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* How it Works Section */
+        .step-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+        .step-card:hover { transform: translateY(-5px); }
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: #e6fcf5;
+            color: var(--primary-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Impact Tracker */
+        .impact-section {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem;
+            margin: 5rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+        .impact-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .stat-box h3 { font-size: 2.5rem; color: var(--secondary-coral); }
+        .stat-box p { font-weight: 600; color: #666; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-teal);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateX(200%);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 3000;
+            font-weight: 700;
+        }
+        .notification.show { transform: translateX(0); }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0; right: -400px; width: 350px; height: 100%;
+            background: white;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 2500;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+        .cart-footer { margin-top: auto; border-top: 2px solid #eee; padding-top: 1.5rem; }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px; right: -10px;
+            background: var(--secondary-coral);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 800;
+        }
+
+        /* Category Pills */
+        .cat-pills {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 5%;
+            margin-bottom: 2rem;
+            scrollbar-width: none;
+        }
+        .cat-pills::-webkit-scrollbar { display: none; }
+        .pill {
+            padding: 0.6rem 1.5rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .pill.active { background: var(--primary-teal); color: white; border-color: var(--primary-teal); }
+        .pill:hover { border-color: var(--primary-teal); color: var(--primary-teal); }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary-coral);
+        }
+
+        .site-footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 4rem 5% 6rem;
+            margin-top: 5rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+        .footer-logo { font-size: 2rem; font-weight: 800; color: var(--primary-teal); margin-bottom: 1rem; }
+        .footer-logo span { color: var(--secondary-coral); }
+        .footer-links h4 { margin-bottom: 1.5rem; color: var(--secondary-coral); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; opacity: 0.7; transition: 0.3s; cursor: pointer; }
+        .footer-links li:hover { opacity: 1; color: var(--secondary-coral); }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero { padding: 8rem 5% 4rem; height: auto; min-height: 80vh; }
+            .hero h1 { font-size: 2.2rem; line-height: 1.2; }
+            .hero p { font-size: 1rem; }
+            .search-bar-glass { flex-direction: column; border-radius: 20px; padding: 10px; }
+            .search-bar-glass button { width: 100%; border-radius: 12px; margin-top: 10px; }
+            
+            .impact-section { grid-template-columns: 1fr; padding: 2rem; }
+            .impact-stats { gap: 1rem; }
+            .stat-box h3 { font-size: 1.8rem; }
+            
+            .listing-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .listing-img { height: 280px; }
+            
+            .cart-sidebar { width: 100%; right: -100%; }
+            .modal-content { padding: 1.5rem; border-radius: 20px; }
+            
+            .container { padding: 0 5%; }
+            .site-header { padding: 1rem 5%; }
+            .logo { font-size: 1.5rem; }
+            .swap-o-meter { font-size: 0.8rem; padding: 0.5rem 1rem; }
+        }
+
+        /* Listing Grid */
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary { background: var(--primary-teal); color: white; }
+        .btn-secondary { background: var(--secondary-coral); color: white; }
+
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            z-index: 1001;
+        }
+
+        .mobile-nav i { font-size: 1.5rem; color: #888; }
+        .mobile-nav .active { color: var(--primary-teal); }
+
+        .plus-btn {
+            background: var(--primary-teal);
+            color: white !important;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -30px;
+            box-shadow: 0 5px 15px rgba(0,128,128,0.3);
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            z-index: 1500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            animation: pulse-green 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="logo">Tabadla<span>.</span></div>
+    <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <div class="swap-o-meter">
+            <i class="fas fa-tint"></i> <span id="water-count">14,250</span>L Saved
+        </div>
+        <div style="position: relative; cursor: pointer;" onclick="toggleCart()">
+            <i class="fas fa-shopping-bag fa-lg" style="color: var(--primary-teal);"></i>
+            <span id="cart-count" class="cart-badge">0</span>
+        </div>
+    </div>
+</header>
+
+<div id="notification" class="notification">Request Sent!</div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="cart-sidebar">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>Your Cart</h2>
+        <i class="fas fa-times" onclick="toggleCart()" style="cursor: pointer; font-size: 1.5rem;"></i>
+    </div>
+    <div id="cartItems" style="flex: 1; overflow-y: auto;">
+        <p style="color: #888; text-align: center; margin-top: 2rem;">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem;">
+            <span>Total:</span>
+            <span id="cartTotal">RS. 0</span>
+        </div>
+        <button class="btn btn-primary" style="width: 100%;" onclick="showToast('Proceeding to Checkout...')">Checkout Now</button>
+    </div>
+</div>
+
+<!-- Add Listing Modal -->
+<div id="addListingModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('addListingModal')">&times;</span>
+        <h2 style="margin-bottom: 1.5rem;">List New Item</h2>
+        <form id="listingForm" onsubmit="handleListingSubmit(event)">
+            <input type="text" id="itemName" placeholder="Item Name" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+            <select id="itemCat" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+                <option value="Unstitched Lawn">Unstitched Lawn</option>
+                <option value="Luxury Pret">Luxury Pret</option>
+                <option value="Menswear">Menswear</option>
+                <option value="Accessories">Accessories</option>
+            </select>
+            <select id="itemLoc" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+                <option value="University Area">University Area</option>
+                <option value="Gulgasht">Gulgasht</option>
+                <option value="Cantt">Cantt Area</option>
+                <option value="Wapda Town">Wapda Town</option>
+            </select>
+            <input type="number" id="itemPrice" placeholder="Price (RS) - 0 for Swap" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #666;">Upload Photo</label>
+                <input type="file" id="itemImage" accept="image/*" required style="width: 100%;">
+            </div>
+            <button type="submit" class="btn btn-primary">Publish Listing</button>
+        </form>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
+        <h1>Renew Your Style,<br>Respect the Planet<span>.</span></h1>
+        <p>Tabadla is Multan's first premium circular fashion hub. Swap unstitched lawn, luxury wear, and vintage gems effortlessly.</p>
+        
+        <div class="search-bar-glass">
+            <input type="text" placeholder="Search by brand, size, or location...">
+            <button>Explore Now</button>
+        </div>
+    </div>
+</section>
+
+<!-- Category Selection -->
+<div class="cat-pills" data-aos="fade-up">
+    <div class="pill active" onclick="filterCategory('all', this)">All Fashion</div>
+    <div class="pill" onclick="filterCategory('Unstitched Lawn', this)">Unstitched Lawn</div>
+    <div class="pill" onclick="filterCategory('Luxury Pret', this)">Luxury Pret</div>
+    <div class="pill" onclick="filterCategory('Menswear', this)">Menswear</div>
+    <div class="pill" onclick="filterCategory('Kids', this)">Kids</div>
+    <div class="pill" onclick="filterCategory('Accessories', this)">Accessories</div>
+    <div class="pill" onclick="filterCategory('Vintage', this)">Vintage</div>
+</div>
+
+<main class="container">
+    <!-- Why Tabadla? -->
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2.5rem;" data-aos="fade-up">Why Tabadla?</h2>
+        <p style="color: #666;" data-aos="fade-up" data-aos-delay="100">The first ethical fashion platform in Multan</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 6rem;">
+        <div data-aos="fade-right">
+            <h3 style="color: var(--primary-teal); margin-bottom: 1rem;"><i class="fas fa-leaf"></i> Eco-Conscious</h3>
+            <p>Every piece of clothing takes 2,700L of water to make. Swapping extends its life and saves the planet.</p>
+        </div>
+        <div data-aos="fade-up">
+            <h3 style="color: var(--primary-teal); margin-bottom: 1rem;"><i class="fas fa-shield-alt"></i> Hygiene First</h3>
+            <p>Our "Hygiene Passport" ensures every item is sanitized and verified before it reaches your doorstep.</p>
+        </div>
+        <div data-aos="fade-left">
+            <h3 style="color: var(--primary-teal); margin-bottom: 1rem;"><i class="fas fa-users"></i> Local Community</h3>
+            <p>Connect with fashion lovers in Multan. Meet in University Area, Cantt, or Gulgasht for safe swaps.</p>
+        </div>
+    </div>
+    <!-- How it Works -->
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2.5rem;" data-aos="fade-up">The Tabadla Loop</h2>
+        <p style="color: #666;" data-aos="fade-up" data-aos-delay="100">Simple steps to join the circular economy</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 6rem;">
+        <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="step-icon"><i class="fas fa-camera"></i></div>
+            <h3>Upload</h3>
+            <p>Snap a photo of your pre-loved fashion items.</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="step-icon"><i class="fas fa-sync"></i></div>
+            <h3>Match</h3>
+            <p>Our feed matches your style with other swappers.</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="step-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <h3>Exchange</h3>
+            <p>Meet up or ship to complete the circular swap.</p>
+        </div>
+    </div>
+
+    <!-- Impact Tracker -->
+    <div class="impact-section" data-aos="fade-right">
+        <div>
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Our Shared Impact</h2>
+            <p style="color: #666; margin-bottom: 2rem;">Every swap on Tabadla saves precious resources. Join thousands of Multanis making a difference.</p>
+            <div class="impact-stats">
+                <div class="stat-box">
+                    <h3>14k+</h3>
+                    <p>Liters Saved</p>
+                </div>
+                <div class="stat-box">
+                    <h3>450+</h3>
+                    <p>Items Swapped</p>
+                </div>
+            </div>
+        </div>
+        <div style="background: var(--bg-off-white); padding: 2rem; border-radius: 30px; position: relative;" data-aos="fade-left">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow);">
+            <div style="position: absolute; bottom: -20px; right: -20px; background: var(--secondary-coral); color: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(255,127,80,0.4);">
+                <i class="fas fa-leaf fa-2x"></i>
+                <div style="font-weight: 800; font-size: 1.2rem;">Ecofriendly</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 2.2rem;" data-aos="fade-right">Fresh Picks</h2>
+        <a href="#" style="font-weight: 700; color: var(--secondary-coral);">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div class="listing-grid">
+        <!-- Mock Card 1 -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="listing-img">
+                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Dress" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Lawn Collection - Unstitched</div>
+                <div class="listing-price">Swap Request</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, University Area
+                </div>
+                <a href="#" class="btn btn-primary">Request Swap</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 2 -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="listing-img">
+                <img src="https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=400&q=80" alt="Jacket" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Premium Denim Jacket</div>
+                <div class="listing-price">RS. 2,500</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Cantt
+                </div>
+                <a href="#" class="btn btn-secondary" onclick="addToCart('Premium Denim Jacket', 2500, 'https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 3 -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="listing-img">
+                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <img src="https://images.unsplash.com/photo-1434389677669-e08b493021ec?auto=format&fit=crop&w=400&q=80" alt="Shirt" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Silk Formal Shirt</div>
+                <div class="listing-price">Swap Request</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Bosan Road
+                </div>
+                <a href="#" class="btn btn-primary">Request Swap</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 4 (New) -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="listing-img">
+                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=400&q=80" alt="Suit" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Embroidered Chiffon Suit</div>
+                <div class="listing-price">RS. 4,500</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Gulgasht
+                </div>
+                <a href="#" class="btn btn-secondary" onclick="addToCart('Embroidered Chiffon Suit', 4500, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 5 (New) -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="listing-img">
+                <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=400&q=80" alt="Bag" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Vintage Leather Handbag</div>
+                <div class="listing-price">Swap Request</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Model Town
+                </div>
+                <a href="#" class="btn btn-primary">Request Swap</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 6 (New) -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="listing-img">
+                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=400&q=80" alt="Shoes" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Designer Sneaker (Size 42)</div>
+                <div class="listing-price">RS. 3,200</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Mall Road
+                </div>
+                <a href="#" class="btn btn-secondary" onclick="addToCart('Designer Sneaker', 3200, 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
+            </div>
+        </div>
+
+        <!-- Mock Card 7 (New) -->
+        <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="listing-img">
+                <img src="https://images.unsplash.com/photo-1598501479155-90b46223ad0b?auto=format&fit=crop&w=400&q=80" alt="Kurta" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">Cotton Men's Kurta</div>
+                <div class="listing-price">RS. 1,850</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Wapda Town
+                </div>
+                <a href="#" class="btn btn-secondary" onclick="addToCart('Cotton Men\'s Kurta', 1850, 'https://images.unsplash.com/photo-1598501479155-90b46223ad0b?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div style="margin: 8rem 0;">
+        <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 4rem;" data-aos="fade-up">Swapper Stories</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="testimonial-card" data-aos="fade-right">
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Found an amazing unstitched lawn suit from Gulgasht. The hygiene verification gave me peace of mind. Highly recommended!"</p>
+                <strong>— Sarah K.</strong>
+                <div style="color: #FFD700; margin-top: 0.5rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+            <div class="testimonial-card" data-aos="fade-up">
+                <p style="font-style: italic; margin-bottom: 1.5rem;">"Tabadla is exactly what we needed. I swapped my vintage bag for a premium denim jacket. Smooth process!"</p>
+                <strong>— Ahmed R.</strong>
+                <div style="color: #FFD700; margin-top: 0.5rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo">Tabadla<span>.</span></div>
+            <p style="opacity: 0.7;">Multan's leading circular fashion exchange. Join the movement to save water and look great.</p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <i class="fab fa-instagram fa-2x"></i>
+                <i class="fab fa-facebook fa-2x"></i>
+                <i class="fab fa-whatsapp fa-2x"></i>
+            </div>
+        </div>
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li>Browse Feed</li>
+                <li>How it Works</li>
+                <li>Sanitization Process</li>
+                <li>Impact Stories</li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Locations</h4>
+            <ul>
+                <li>University Area</li>
+                <li>Gulgasht Colony</li>
+                <li>Cantt Area</li>
+                <li>Wapda Town</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Newsletter</h4>
+            <p style="opacity: 0.7; margin-bottom: 1rem; font-size: 0.9rem;">Get weekly updates on fresh drops.</p>
+            <div style="display: flex;">
+                <input type="email" placeholder="Email" style="padding: 0.8rem; border: none; border-radius: 10px 0 0 10px; flex: 1;">
+                <button style="background: var(--primary-teal); border: none; color: white; padding: 0.8rem 1rem; border-radius: 0 10px 10px 0;">Join</button>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 4rem; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+        &copy; 2026 Tabadla. All rights reserved. Made for a Greener Multan.
+    </div>
+</footer>
+
+<a href="https://wa.me/923000000000" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<nav class="mobile-nav">
+    <a href="index.html" class="active"><i class="fas fa-home"></i></a>
+    <a href="#" onclick="focusSearch()"><i class="fas fa-search"></i></a>
+    <a href="#" class="plus-btn" onclick="openModal('addListingModal')"><i class="fas fa-plus"></i></a>
+    <a href="#" onclick="showToast('Feature coming soon!')"><i class="fas fa-heart"></i></a>
+    <a href="#" onclick="showToast('Profile Login Needed')"><i class="fas fa-user"></i></a>
+</nav>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
+
+    // Filtering Logic
+    function filterCategory(cat, el) {
+        // Update Pills
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+
+        // Filter Cards
+        const cards = document.querySelectorAll('.listing-card');
+        cards.forEach(card => {
+            const title = card.querySelector('.listing-title').innerText;
+            if (cat === 'all' || title.toLowerCase().includes(cat.toLowerCase())) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Search Logic
+    const searchInput = document.querySelector('.search-bar-glass input');
+    const searchBtn = document.querySelector('.search-bar-glass button');
+
+    searchBtn.addEventListener('click', () => {
+        const query = searchInput.value.toLowerCase();
+        const cards = document.querySelectorAll('.listing-card');
+        cards.forEach(card => {
+            const content = card.innerText.toLowerCase();
+            if (content.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    function focusSearch() {
+        searchInput.focus();
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Modal Logic
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // Toast Logic
+    function showToast(msg) {
+        const toast = document.getElementById('notification');
+        toast.innerText = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Actions
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+        if(btn.innerText === 'Request Swap') {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('Swap Request Sent Successfully!');
+            });
+        }
+    });
+
+    document.querySelectorAll('.btn-secondary').forEach(btn => {
+        if(btn.innerText === 'Buy Now') {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('Added to Cart!');
+            });
+        }
+    });
+
+    function handleListingSubmit(e) {
+        e.preventDefault();
+        
+        // Get values
+        const name = document.getElementById('itemName').value;
+        const cat = document.getElementById('itemCat').value;
+        const loc = document.getElementById('itemLoc').value;
+        const price = document.getElementById('itemPrice').value;
+        const imageFile = document.getElementById('itemImage').files[0];
+        const grid = document.querySelector('.listing-grid');
+
+        // Generate Image Preview URL
+        let imageUrl = 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=400&q=80'; // Default
+        if (imageFile) {
+            imageUrl = URL.createObjectURL(imageFile);
+        }
+
+        // Create New Card HTML
+        const newCard = document.createElement('div');
+        newCard.className = 'listing-card';
+        newCard.setAttribute('data-aos', 'fade-up');
+        
+        const priceDisplay = price > 0 ? `RS. ${price}` : 'Swap Request';
+        const btnClass = price > 0 ? 'btn-secondary' : 'btn-primary';
+        const btnText = price > 0 ? 'Buy Now' : 'Request Swap';
+
+        // Add to cart logic if price > 0
+        const actionHtml = price > 0 
+            ? `<a href="#" class="btn btn-secondary" onclick="addToCart('${name}', ${price}, '${imageUrl}')">Buy Now</a>`
+            : `<a href="#" class="btn btn-primary" onclick="showToast('Swap Request Sent!')">Request Swap</a>`;
+
+        newCard.innerHTML = `
+            <div class="listing-img">
+                <span class="badge" style="background: #fff9db; color: #f08c00;"><i class="fas fa-clock"></i> Pending Verification</span>
+                <img src="${imageUrl}" alt="New Item" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="listing-content">
+                <div class="listing-title">${name}</div>
+                <div class="listing-price">${priceDisplay}</div>
+                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, ${loc}
+                </div>
+                ${actionHtml}
+            </div>
+        `;
+
+        // Prepend to Grid
+        grid.prepend(newCard);
+
+        // UI Feedback
+        closeModal('addListingModal');
+        showToast('Listing Uploaded Successfully!');
+        document.getElementById('listingForm').reset();
+
+        // Scroll to new item
+        newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Cart Logic
+    let cart = [];
+    function toggleCart() {
+        document.getElementById('cartSidebar').classList.toggle('open');
+    }
+
+    function addToCart(name, price, img) {
+        cart.push({ name, price, img });
+        updateCartUI();
+        showToast('Added to Cart!');
+        if (!document.getElementById('cartSidebar').classList.contains('open')) {
+            toggleCart();
+        }
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cartTotal');
+        
+        cartCount.innerText = cart.length;
+        
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p style="color: #888; text-align: center; margin-top: 2rem;">Your cart is empty.</p>';
+            cartTotal.innerText = 'RS. 0';
+            return;
+        }
+
+        let total = 0;
+        cartItems.innerHTML = cart.map((item, index) => {
+            total += parseInt(item.price);
+            return `
+                <div class="cart-item">
+                    <img src="${item.img}">
+                    <div style="flex: 1;">
+                        <div style="font-weight: 700;">${item.name}</div>
+                        <div style="color: var(--secondary-coral); font-weight: 700;">RS. ${item.price}</div>
+                    </div>
+                    <i class="fas fa-trash" onclick="removeFromCart(${index})" style="color: #ff4d4d; cursor: pointer;"></i>
+                </div>
+            `;
+        }).join('');
+
+        cartTotal.innerText = `RS. ${total}`;
+    }
+</script>
+</body>
+</html>
