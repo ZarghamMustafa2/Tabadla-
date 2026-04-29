@@ -793,6 +793,11 @@
         document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
         el.classList.add('active');
 
+        // Clear search input
+        searchInput.value = "";
+        const noResults = document.getElementById('no-results-msg');
+        if (noResults) noResults.style.display = 'none';
+
         // Filter Cards
         const cards = document.querySelectorAll('.listing-card');
         cards.forEach(card => {
@@ -810,18 +815,51 @@
     const searchBtn = document.querySelector('.search-bar-glass button');
 
     searchBtn.addEventListener('click', () => {
-        const query = searchInput.value.toLowerCase();
+        const query = searchInput.value.toLowerCase().trim();
+        const words = query.split(/\s+/);
         const cards = document.querySelectorAll('.listing-card');
         const grid = document.querySelector('.listing-grid');
         
+        // Reset category pills
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        document.querySelector('.pill').classList.add('active'); // Set 'All Fashion' to active
+
+        let visibleCount = 0;
         cards.forEach(card => {
             const content = card.innerText.toLowerCase();
-            if (content.includes(query)) {
+            // Match if all search words are found in the card content
+            const isMatch = words.every(word => content.includes(word));
+            
+            if (isMatch) {
                 card.style.display = 'block';
+                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
+
+        // Handle "No Results" message
+        let noResults = document.getElementById('no-results-msg');
+        if (visibleCount === 0) {
+            if (!noResults) {
+                noResults = document.createElement('div');
+                noResults.id = 'no-results-msg';
+                noResults.style.textAlign = 'center';
+                noResults.style.padding = '3rem';
+                noResults.style.gridColumn = '1 / -1';
+                noResults.innerHTML = `
+                    <i class="fas fa-search-minus fa-3x" style="color: #ddd; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #888;">No items found matching "${query}"</h3>
+                    <p style="color: #aaa;">Try different keywords or browse categories below.</p>
+                `;
+                grid.appendChild(noResults);
+            } else {
+                noResults.style.display = 'block';
+                noResults.querySelector('h3').innerText = `No items found matching "${query}"`;
+            }
+        } else if (noResults) {
+            noResults.style.display = 'none';
+        }
 
         // Scroll to results
         grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -829,7 +867,6 @@
         if (query === "") {
             showToast('Showing all listings');
         } else {
-            const visibleCount = Array.from(cards).filter(c => c.style.display !== 'none').length;
             showToast(`Found ${visibleCount} items for "${query}"`);
         }
     });
