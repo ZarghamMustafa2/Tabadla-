@@ -41,11 +41,35 @@
 
         .swap-o-meter {
             background: #e3f2fd;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 50px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #1976d2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.1);
+        }
+
+        .btn-post-header {
+            background: var(--secondary-coral);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(255, 127, 80, 0.3);
+        }
+
+        .btn-post-header:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: #ff6b3d;
+            box-shadow: 0 8px 20px rgba(255, 127, 80, 0.4);
         }
 
         .hero {
@@ -110,6 +134,37 @@
 
         .search-bar-glass button:hover { transform: scale(1.05); background: #ff6b3d; }
 
+        .trending-searches {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .trending-searches span {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .trending-tag {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .trending-tag:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
         .container { padding: 0 5%; max-width: 1200px; margin: 0 auto; }
 
         .listing-grid {
@@ -129,9 +184,105 @@
         }
 
         .listing-card:hover { 
-            transform: translateY(-15px) scale(1.02); 
+            transform: translateY(-15px); 
             box-shadow: 0 30px 60px rgba(0, 128, 128, 0.15);
-            border-color: rgba(0, 128, 128, 0.1);
+            border-color: rgba(0, 128, 128, 0.2);
+        }
+
+        .listing-content {
+            padding: 1.5rem;
+        }
+
+        .listing-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-slate);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .listing-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .listing-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-teal);
+        }
+
+        .listing-location {
+            font-size: 0.85rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .listing-time {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 0.3rem;
+        }
+
+        .badge-trending {
+            background: linear-gradient(45deg, #f06529, #ff7f50);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(240, 101, 41, 0.3);
+        }
+
+        .badge-new {
+            background: linear-gradient(45deg, #20c997, #0ca678);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(12, 166, 120, 0.3);
+        }
+
+        .verified-tag {
+            color: #1976d2;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .star-rating {
+            color: #ffc107;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .top-swapper-badge {
+            background: #fff9db;
+            color: #f08c00;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
         }
 
         .listing-img {
@@ -410,29 +561,56 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-around;
-            padding: 1rem 0;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            padding: 0.8rem 0 1.5rem;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
             z-index: 1001;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
 
-        .mobile-nav i { font-size: 1.5rem; color: #888; }
-        .mobile-nav .active { color: var(--primary-teal); }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-item i { font-size: 1.4rem; }
+        .nav-item.active { color: var(--primary-teal); }
+        .nav-item.active i { transform: translateY(-2px); }
+
+        .plus-btn-wrapper {
+            position: relative;
+            margin-top: -45px;
+        }
 
         .plus-btn {
-            background: var(--primary-teal);
+            background: linear-gradient(135deg, var(--primary-teal) 0%, #006666 100%);
             color: white !important;
-            width: 50px;
-            height: 50px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: -30px;
-            box-shadow: 0 5px 15px rgba(0,128,128,0.3);
+            box-shadow: 0 10px 25px rgba(0,128,128,0.4);
+            border: 5px solid white;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        .plus-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .plus-btn i { font-size: 1.8rem; color: white; }
 
         /* Floating WhatsApp */
         .whatsapp-float {
@@ -462,6 +640,11 @@
             70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
+
+        @media (max-width: 480px) {
+            .desktop-only { display: none; }
+            .btn-post-header { padding: 0.7rem; }
+        }
     </style>
 </head>
 <body>
@@ -474,6 +657,10 @@
         <div class="swap-o-meter">
             <i class="fas fa-tint"></i> <span id="water-count">14,250</span>L Saved
         </div>
+        <a href="#" class="btn-post-header" onclick="openModal('addListingModal')">
+            <i class="fas fa-plus-circle"></i>
+            <span class="desktop-only">Post Item</span>
+        </a>
         <div style="position: relative; cursor: pointer;" onclick="toggleCart()">
             <i class="fas fa-shopping-bag fa-lg" style="color: var(--primary-teal);"></i>
             <span id="cart-count" class="cart-badge">0</span>
@@ -505,7 +692,8 @@
 <div id="addListingModal" class="modal-overlay">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal('addListingModal')">&times;</span>
-        <h2 style="margin-bottom: 1.5rem;">List New Item</h2>
+        <h2 style="margin-bottom: 0.5rem;">List New Item</h2>
+        <p style="color: #888; margin-bottom: 1.5rem; font-size: 0.9rem;">Join the circular fashion movement in Multan.</p>
         <form id="listingForm" onsubmit="handleListingSubmit(event)">
             <input type="text" id="itemName" placeholder="Item Name" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
             <select id="itemCat" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
@@ -538,6 +726,13 @@
         <div class="search-bar-glass">
             <input type="text" placeholder="Search by brand, size, or location...">
             <button>Explore Now</button>
+        </div>
+        <div class="trending-searches">
+            <span>Trending:</span>
+            <div class="trending-tag" onclick="setSearch('Lawn')">Lawn</div>
+            <div class="trending-tag" onclick="setSearch('Vintage')">Vintage</div>
+            <div class="trending-tag" onclick="setSearch('Luxury')">Luxury</div>
+            <div class="trending-tag" onclick="setSearch('Gulgasht')">Gulgasht</div>
         </div>
     </div>
 </section>
@@ -632,14 +827,24 @@
         <!-- Mock Card 1 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
             <div class="listing-img">
-                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <span class="badge-trending">Trending</span>
                 <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Dress" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Lawn Collection - Unstitched</div>
-                <div class="listing-price">Swap Request</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, University Area
+                <div class="listing-meta">
+                    <div class="listing-price">Swap</div>
+                    <div class="star-rating"><i class="fas fa-star"></i> 4.9</div>
+                </div>
+                <div class="listing-location">
+                    <i class="fas fa-map-marker-alt"></i> University Area
+                </div>
+                <div class="listing-time">2 mins ago</div>
+                <div class="verified-tag" style="margin-top: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Verified Seller
+                </div>
+                <div class="top-swapper-badge">
+                    <i class="fas fa-crown"></i> Top Swapper
                 </div>
                 <a href="#" class="btn btn-primary">Request Swap</a>
             </div>
@@ -648,13 +853,21 @@
         <!-- Mock Card 2 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="200">
             <div class="listing-img">
+                <span class="badge-new">Just Listed</span>
                 <img src="https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=400&q=80" alt="Jacket" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Premium Denim Jacket</div>
-                <div class="listing-price">RS. 2,500</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Cantt
+                <div class="listing-meta">
+                    <div class="listing-price">RS. 2,500</div>
+                    <div class="star-rating"><i class="fas fa-star"></i> 4.7</div>
+                </div>
+                <div class="listing-location">
+                    <i class="fas fa-map-marker-alt"></i> Cantt
+                </div>
+                <div class="listing-time">15 mins ago</div>
+                <div class="verified-tag" style="margin-top: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Verified Seller
                 </div>
                 <a href="#" class="btn btn-secondary" onclick="addToCart('Premium Denim Jacket', 2500, 'https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
             </div>
@@ -663,78 +876,45 @@
         <!-- Mock Card 3 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="300">
             <div class="listing-img">
-                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
                 <img src="https://images.unsplash.com/photo-1434389677669-e08b493021ec?auto=format&fit=crop&w=400&q=80" alt="Shirt" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Silk Formal Shirt</div>
-                <div class="listing-price">Swap Request</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Bosan Road
+                <div class="listing-meta">
+                    <div class="listing-price">Swap</div>
+                    <div class="star-rating"><i class="fas fa-star"></i> 4.5</div>
+                </div>
+                <div class="listing-location">
+                    <i class="fas fa-map-marker-alt"></i> Bosan Road
+                </div>
+                <div class="listing-time">1 hour ago</div>
+                <div class="verified-tag" style="margin-top: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Verified Seller
                 </div>
                 <a href="#" class="btn btn-primary">Request Swap</a>
             </div>
         </div>
 
-        <!-- Mock Card 4 (New) -->
+        <!-- Mock Card 4 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
             <div class="listing-img">
-                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
+                <span class="badge-trending">Hot Swap</span>
                 <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=400&q=80" alt="Suit" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Embroidered Chiffon Suit</div>
-                <div class="listing-price">RS. 4,500</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Gulgasht
+                <div class="listing-meta">
+                    <div class="listing-price">RS. 4,500</div>
+                    <div class="star-rating"><i class="fas fa-star"></i> 5.0</div>
+                </div>
+                <div class="listing-location">
+                    <i class="fas fa-map-marker-alt"></i> Gulgasht
+                </div>
+                <div class="listing-time">3 hours ago</div>
+                <div class="verified-tag" style="margin-top: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Verified Seller
                 </div>
                 <a href="#" class="btn btn-secondary" onclick="addToCart('Embroidered Chiffon Suit', 4500, 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
-            </div>
-        </div>
-
-        <!-- Mock Card 5 (New) -->
-        <div class="listing-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="listing-img">
-                <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=400&q=80" alt="Bag" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div class="listing-content">
-                <div class="listing-title">Vintage Leather Handbag</div>
-                <div class="listing-price">Swap Request</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Model Town
-                </div>
-                <a href="#" class="btn btn-primary">Request Swap</a>
-            </div>
-        </div>
-
-        <!-- Mock Card 6 (New) -->
-        <div class="listing-card" data-aos="fade-up" data-aos-delay="300">
-            <div class="listing-img">
-                <span class="badge"><i class="fas fa-check-circle"></i> Verified Sanitized</span>
-                <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=400&q=80" alt="Shoes" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div class="listing-content">
-                <div class="listing-title">Designer Sneaker (Size 42)</div>
-                <div class="listing-price">RS. 3,200</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Mall Road
-                </div>
-                <a href="#" class="btn btn-secondary" onclick="addToCart('Designer Sneaker', 3200, 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
-            </div>
-        </div>
-
-        <!-- Mock Card 7 (New) -->
-        <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
-            <div class="listing-img">
-                <img src="https://images.unsplash.com/photo-1598501479155-90b46223ad0b?auto=format&fit=crop&w=400&q=80" alt="Kurta" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div class="listing-content">
-                <div class="listing-title">Cotton Men's Kurta</div>
-                <div class="listing-price">RS. 1,850</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, Wapda Town
-                </div>
-                <a href="#" class="btn btn-secondary" onclick="addToCart('Cotton Men\'s Kurta', 1850, 'https://images.unsplash.com/photo-1598501479155-90b46223ad0b?auto=format&fit=crop&w=400&q=80')">Buy Now</a>
             </div>
         </div>
     </div>
@@ -807,11 +987,27 @@
 </a>
 
 <nav class="mobile-nav">
-    <a href="index.html" class="active"><i class="fas fa-home"></i></a>
-    <a href="#" onclick="focusSearch()"><i class="fas fa-search"></i></a>
-    <a href="#" class="plus-btn" onclick="openModal('addListingModal')"><i class="fas fa-plus"></i></a>
-    <a href="#" onclick="showToast('Feature coming soon!')"><i class="fas fa-heart"></i></a>
-    <a href="#" onclick="showToast('Profile Login Needed')"><i class="fas fa-user"></i></a>
+    <a href="index.html" class="nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="#" class="nav-item" onclick="focusSearch()">
+        <i class="fas fa-search"></i>
+        <span>Explore</span>
+    </a>
+    <div class="plus-btn-wrapper">
+        <a href="#" class="plus-btn" onclick="openModal('addListingModal')">
+            <i class="fas fa-plus"></i>
+        </a>
+    </div>
+    <a href="#" class="nav-item" onclick="showToast('Feature coming soon!')">
+        <i class="fas fa-heart"></i>
+        <span>Saved</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showToast('Profile Login Needed')">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+    </a>
 </nav>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -918,6 +1114,11 @@
         searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    function setSearch(query) {
+        searchInput.value = query;
+        searchBtn.click();
+    }
+
     // Modal Logic
     function openModal(id) {
         document.getElementById(id).style.display = 'flex';
@@ -987,14 +1188,21 @@
 
         newCard.innerHTML = `
             <div class="listing-img">
-                <span class="badge" style="background: #fff9db; color: #f08c00;"><i class="fas fa-clock"></i> Pending Verification</span>
+                <span class="badge-new">Just Listed</span>
                 <img src="${imageUrl}" alt="New Item" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">${name}</div>
-                <div class="listing-price">${priceDisplay}</div>
-                <div style="font-size: 0.9rem; color: #888; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--secondary-coral);"></i> Multan, ${loc}
+                <div class="listing-meta">
+                    <div class="listing-price">${priceDisplay}</div>
+                    <div class="star-rating"><i class="fas fa-star"></i> 5.0</div>
+                </div>
+                <div class="listing-location">
+                    <i class="fas fa-map-marker-alt"></i> ${loc}
+                </div>
+                <div class="listing-time">Just now</div>
+                <div class="verified-tag" style="margin-top: 0.5rem;">
+                    <i class="fas fa-check-circle"></i> Verified Seller
                 </div>
                 ${actionHtml}
             </div>
