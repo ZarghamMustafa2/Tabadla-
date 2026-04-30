@@ -138,9 +138,15 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+        .nav-auth-link {
+            color: var(--text-slate);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-auth-link { display: none; }
         }
 
         .search-bar-glass {
@@ -563,11 +569,14 @@
         .footer-links li:hover { opacity: 1; color: var(--secondary-coral); }
 
         @media (max-width: 768px) {
-            .site-header { padding: 0.8rem 4%; }
-            .logo img { height: 70px; }
-            .swap-o-meter { font-size: 0.8rem; padding: 0.5rem 1rem; }
+            .site-header { padding: 0.8rem 1rem; }
+            .logo img { height: 60px; }
+            .swap-o-meter { display: none; }
+            .btn-post-header { padding: 0.5rem 0.8rem; }
+            .btn-post-header span { display: none; }
+            .site-header .desktop-only { display: none; }
             
-            .hero { padding: 5rem 5% 3rem; border-radius: 0 0 30px 30px; min-height: auto; }
+            .hero { padding: 8rem 5% 4rem; min-height: auto; margin-bottom: 2rem; }
             .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; }
             .hero p { font-size: 1rem; margin-bottom: 2.5rem; opacity: 1; }
             
@@ -747,7 +756,7 @@
         <div class="swap-o-meter">
             <i class="fas fa-tint"></i> <span id="water-count">14,250</span>L Saved
         </div>
-        <a href="#" style="color: var(--text-slate); text-decoration: none; font-weight: 700; font-size: 0.9rem;" onclick="openModal('authModal')">Sign In</a>
+        <a href="#" class="nav-auth-link" onclick="openModal('authModal')">Sign In</a>
         <a href="#" class="btn-post-header" onclick="openModal('addListingModal')">
             <i class="fas fa-plus-circle"></i>
             <span class="desktop-only">Post Item</span>
