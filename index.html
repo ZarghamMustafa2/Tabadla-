@@ -761,11 +761,111 @@
 </div>
 
 <!-- Add Listing Modal -->
-<div id="addListingModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('addListingModal')">&times;</span>
-        <h2 style="margin-bottom: 0.5rem;">List New Item</h2>
-        <p style="color: #888; margin-bottom: 1.5rem; font-size: 0.9rem;">Join the circular fashion movement in Multan.</p>
+<!-- Product Details Modal -->
+<div id="productDetailModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 900px; padding: 0; border-radius: 30px; overflow: hidden;">
+        <div style="display: flex; flex-direction: row; height: 100%; min-height: 500px;">
+            <div style="flex: 1; background: #eee; position: relative;">
+                <span class="close-modal" onclick="closeModal('productDetailModal')" style="left: 20px; right: auto; background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">&times;</span>
+                <img id="detailImg" src="" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="flex: 1; padding: 2.5rem; display: flex; flex-direction: column; overflow-y: auto; max-height: 80vh;">
+                <div id="detailBadge" class="badge-new" style="margin-bottom: 1rem; display: inline-block; width: fit-content;">NEW</div>
+                <h2 id="detailTitle" style="font-size: 2rem; margin-bottom: 0.5rem;" class="luxury-text">Item Title</h2>
+                <div id="detailPrice" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-teal); margin-bottom: 1.5rem;">RS. 0</div>
+                
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f8f9fa; padding: 0.8rem 1.2rem; border-radius: 15px; flex: 1;">
+                        <div style="font-size: 0.7rem; font-weight: 700; color: #888;">CONDITION</div>
+                        <div id="detailCond" style="font-weight: 700;">Mint</div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 0.8rem 1.2rem; border-radius: 15px; flex: 1;">
+                        <div style="font-size: 0.7rem; font-weight: 700; color: #888;">LOCATION</div>
+                        <div id="detailLoc" style="font-weight: 700;">Gulgasht</div>
+                    </div>
+                </div>
+
+                <div id="detailWantsSection" style="background: rgba(0, 128, 128, 0.05); padding: 1.5rem; border-radius: 20px; border: 1px dashed var(--primary-teal); margin-bottom: 2rem;">
+                    <div style="font-weight: 700; color: var(--primary-teal); margin-bottom: 0.5rem;"><i class="fas fa-sync-alt"></i> Exchange Requirements</div>
+                    <p id="detailWants">I'm looking for a premium leather bag or high-end sneakers.</p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <div style="font-weight: 700; margin-bottom: 1rem;">Map Location</div>
+                    <div id="mapMock" style="height: 150px; background: #e9ecef; border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8);">
+                        <i class="fas fa-map-marker-alt fa-2x" style="color: var(--secondary-coral); position: relative; z-index: 2;"></i>
+                        <div style="position: absolute; bottom: 10px; left: 10px; background: white; padding: 5px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: 700;">Interactive Map</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: auto;">
+                    <button class="btn btn-primary" style="flex: 2;">Initiate Swap</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="toggleChat()">Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Auth / Login Modal -->
+<div id="authModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <span class="close-modal" onclick="closeModal('authModal')">&times;</span>
+        <h2 style="margin-bottom: 0.5rem;" class="luxury-text">Welcome Back</h2>
+        <p style="color: #888; margin-bottom: 2rem; font-size: 0.9rem;">Login to start swapping in Multan.</p>
+        <input type="email" placeholder="Email Address" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+        <input type="password" placeholder="Password" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1.5rem;">
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="showOTP()">Login</button>
+        <p style="font-size: 0.8rem; color: #888;">Don't have an account? <a href="#" style="color: var(--secondary-coral); font-weight: 700;">Sign Up</a></p>
+    </div>
+</div>
+
+<!-- OTP Verification Modal -->
+<div id="otpModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <h2 style="margin-bottom: 0.5rem;" class="luxury-text">Verify Identity</h2>
+        <p style="color: #888; margin-bottom: 2rem; font-size: 0.9rem;">Enter the 4-digit code sent to your email.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
+            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
+            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
+            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
+            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
+        <!-- User Dashboard Modal -->
+<div id="dashboardModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 800px;">
+        <span class="close-modal" onclick="closeModal('dashboardModal')">&times;</span>
+        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee;">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+            <div>
+                <h2 class="luxury-text">Zargham Mustafa <i class="fas fa-check-circle" style="color: #4facfe; font-size: 1rem;"></i></h2>
+                <p style="color: #888;">Multan, Pakistan • Joined 2024</p>
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--primary-teal);"><i class="fas fa-star"></i> 4.9 Rating</span>
+                    <span style="font-size: 0.8rem; font-weight: 700; color: var(--secondary-coral);"><i class="fas fa-sync"></i> 12 Swaps</span>
+                </div>
+            </div>
+        </div>
+        
+        <h3 style="margin-bottom: 1.5rem;">My Active Items</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem;">
+            <div style="background: #f8f9fa; border-radius: 15px; padding: 1rem; position: relative;">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=100&q=80" style="width: 100%; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 0.5rem;">
+                <div style="font-weight: 700; font-size: 0.8rem; margin-bottom: 0.5rem;">Lawn Collection</div>
+                <button class="btn btn-primary" style="width: 100%; font-size: 0.7rem; padding: 0.5rem;" onclick="markAsSwapped(this)">Mark Swapped</button>
+            </div>
+            <div style="background: #f8f9fa; border-radius: 15px; padding: 1rem; opacity: 0.5; position: relative;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); background: var(--secondary-coral); color: white; padding: 0.2rem 1rem; border-radius: 5px; font-weight: 800; font-size: 0.8rem; z-index: 2;">SOLD</div>
+                <img src="https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=100&q=80" style="width: 100%; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 0.5rem;">
+                <div style="font-weight: 700; font-size: 0.8rem; margin-bottom: 0.5rem;">Denim Jacket</div>
+                <button class="btn btn-secondary" style="width: 100%; font-size: 0.7rem; padding: 0.5rem;" disabled>Completed</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('otpModal'); showToast('Verification Successful!')">Verify & Continue</button>
+    </div>
+</div>
         <form id="listingForm" onsubmit="handleListingSubmit(event)">
             <input type="text" id="itemName" placeholder="Item Name" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
             <select id="itemCat" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
@@ -841,7 +941,38 @@
     <div class="pill" onclick="filterCategory('Vintage', this)">Vintage</div>
 </div>
 
-<!-- Featured Swaps Slider -->
+<!-- Advanced Filters & Search -->
+<section class="container" style="margin-top: 2rem; margin-bottom: 3rem;">
+    <div style="background: white; padding: 1.5rem; border-radius: 25px; box-shadow: var(--luxury-shadow); display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.6;">Condition</label>
+            <select id="filterCond" class="pill" style="width: 100%; border-radius: 12px; height: 45px; padding: 0 1rem;">
+                <option value="all">All Conditions</option>
+                <option value="New">New Only</option>
+                <option value="Like New">Like New</option>
+                <option value="Used">Used</option>
+            </select>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.6;">Price Range</label>
+            <select id="filterPrice" class="pill" style="width: 100%; border-radius: 12px; height: 45px; padding: 0 1rem;">
+                <option value="all">All Prices</option>
+                <option value="low">Under RS. 2000</option>
+                <option value="mid">RS. 2000 - 5000</option>
+                <option value="high">Over RS. 5000</option>
+            </select>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.6;">Sort By</label>
+            <select id="sortItems" class="pill" style="width: 100%; border-radius: 12px; height: 45px; padding: 0 1rem;">
+                <option value="newest">Newest First</option>
+                <option value="trending">Trending Now</option>
+                <option value="price-low">Price: Low to High</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" style="height: 45px; margin-top: 1.2rem;">Apply Filters</button>
+    </div>
+</section>
 <section class="container" style="margin-bottom: 5rem;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
         <h2 style="font-size: 2.5rem;" class="luxury-text">Featured Swaps</h2>
@@ -1171,7 +1302,7 @@
         <i class="fas fa-comment-dots"></i>
         <span>Chat</span>
     </a>
-    <a href="#" class="nav-item" onclick="showToast('Profile Login Needed')">
+    <a href="#" class="nav-item" onclick="openModal('dashboardModal')">
         <i class="fas fa-user"></i>
         <span>Profile</span>
     </a>
@@ -1354,6 +1485,34 @@
     function toggleChat() {
         const chat = document.getElementById('chatWidget');
         chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function showOTP() {
+        closeModal('authModal');
+        openModal('otpModal');
+    }
+
+    function viewDetails(title, price, img, cond, loc, wants) {
+        document.getElementById('detailTitle').innerText = title;
+        document.getElementById('detailPrice').innerText = price;
+        document.getElementById('detailImg').src = img;
+        document.getElementById('detailCond').innerText = cond;
+        document.getElementById('detailLoc').innerText = loc;
+        document.getElementById('detailWants').innerText = wants || "Direct Sale - No exchange requirements.";
+        document.getElementById('detailWantsSection').style.display = wants ? 'block' : 'none';
+        openModal('productDetailModal');
+    }
+
+    function markAsSwapped(btn) {
+        const parent = btn.parentElement;
+        parent.style.opacity = '0.5';
+        btn.innerText = 'Completed';
+        btn.disabled = true;
+        const soldTag = document.createElement('div');
+        soldTag.style = "position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); background: var(--primary-teal); color: white; padding: 0.2rem 1rem; border-radius: 5px; font-weight: 800; font-size: 0.8rem; z-index: 2;";
+        soldTag.innerText = "SWAPPED";
+        parent.appendChild(soldTag);
+        showToast('Item marked as Swapped!');
     }
 
     // Modal Logic
