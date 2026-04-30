@@ -330,18 +330,36 @@
             gap: 0.2rem;
         }
 
-        .top-swapper-badge {
-            background: #fff9db;
-            color: #f08c00;
-            padding: 0.2rem 0.6rem;
-            border-radius: 6px;
+        .badge-type {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
             font-size: 0.7rem;
             font-weight: 800;
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
-            margin-top: 0.5rem;
+            gap: 0.4rem;
+            text-transform: uppercase;
         }
+
+        .interest-hook {
+            color: var(--secondary-coral);
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .step-circle {
+            width: 30px; height: 30px; background: white; border: 2px solid #eee; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;
+            position: relative; z-index: 2; color: #888;
+        }
+        .step-circle.active { border-color: var(--primary-teal); color: var(--primary-teal); }
 
         .listing-img {
             width: 100%;
@@ -824,14 +842,18 @@
 <!-- OTP Verification Modal -->
 <div id="otpModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <span class="close-modal" onclick="closeModal('otpModal')">&times;</span>
         <h2 style="margin-bottom: 0.5rem;" class="luxury-text">Verify Identity</h2>
         <p style="color: #888; margin-bottom: 2rem; font-size: 0.9rem;">Enter the 4-digit code sent to your email.</p>
         <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
             <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
             <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
-            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
-            <input type="text" maxlength="1" style="width: 50px; height: 60px; text-align: center; font-size: 1.5rem; border: 1px solid #ddd; border-radius: 12px;">
-        <!-- User Dashboard Modal -->
+        </div>
+        <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('otpModal'); showToast('Verification Successful!')">Verify & Continue</button>
+    </div>
+</div>
+
+<!-- User Dashboard Modal -->
 <div id="dashboardModal" class="modal-overlay">
     <div class="modal-content" style="max-width: 800px;">
         <span class="close-modal" onclick="closeModal('dashboardModal')">&times;</span>
@@ -863,35 +885,58 @@
         </div>
     </div>
 </div>
-        <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('otpModal'); showToast('Verification Successful!')">Verify & Continue</button>
-    </div>
-</div>
+
+<!-- Add Listing Modal (3-Step Wizard) -->
+<div id="addListingModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 500px;">
+        <span class="close-modal" onclick="closeModal('addListingModal')">&times;</span>
+        <h2 style="margin-bottom: 0.5rem;" class="luxury-text">Post Your Item</h2>
+        <p style="color: #888; margin-bottom: 1.5rem; font-size: 0.9rem;">Fastest way to sell or swap in Multan.</p>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative;">
+            <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: #eee; z-index: 1;"></div>
+            <div class="step-circle active" id="sc1">1</div>
+            <div class="step-circle" id="sc2">2</div>
+            <div class="step-circle" id="sc3">3</div>
+        </div>
+
         <form id="listingForm" onsubmit="handleListingSubmit(event)">
-            <input type="text" id="itemName" placeholder="Item Name" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
-            <select id="itemCat" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
-                <option value="Unstitched Lawn">Unstitched Lawn</option>
-                <option value="Luxury Pret">Luxury Pret</option>
-                <option value="Menswear">Menswear</option>
-                <option value="Accessories">Accessories</option>
-            </select>
-            <select id="itemLoc" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
-                <option value="University Area">University Area</option>
-                <option value="Gulgasht">Gulgasht</option>
-                <option value="Cantt">Cantt Area</option>
-                <option value="Wapda Town">Wapda Town</option>
-            </select>
-            <select id="itemCond" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
-                <option value="New">Condition: New</option>
-                <option value="Like New">Condition: Like New</option>
-                <option value="Used">Condition: Used</option>
-            </select>
-            <textarea id="itemWants" placeholder="I want to exchange this for... (Leave empty for Direct Sale)" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem; height: 80px;"></textarea>
-            <input type="number" id="itemPrice" placeholder="Price (RS) - 0 for Swap" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #666;">Upload Photo</label>
-                <input type="file" id="itemImage" accept="image/*" required style="width: 100%;">
+            <div id="uploadStep1">
+                <div style="background: #fff9db; padding: 1rem; border-radius: 12px; border: 1px solid #ffe066; margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: center;">
+                    <i class="fas fa-exclamation-triangle" style="color: #f08c00;"></i>
+                    <p style="font-size: 0.8rem; color: #856404; font-weight: 600;">Real photos only. No stock photos.</p>
+                </div>
+                <div style="border: 2px dashed #ddd; padding: 3rem; border-radius: 20px; text-align: center; margin-bottom: 1.5rem; cursor: pointer;" onclick="document.getElementById('itemImage').click()">
+                    <i class="fas fa-camera fa-3x" style="color: #ccc; margin-bottom: 1rem;"></i>
+                    <input type="file" id="itemImage" accept="image/*" style="display: none;" onchange="goToStep(2)">
+                    <p style="color: #888; font-weight: 600;">Click to Upload Photo</p>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Publish Listing</button>
+            <div id="uploadStep2" style="display: none;">
+                <input type="text" id="itemName" placeholder="What are you listing?" required style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+                <select id="itemCat" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem;">
+                    <option value="Clothing">Clothing</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Books">Books</option>
+                </select>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <select id="itemCond" style="flex: 1; padding: 1rem; border: 1px solid #ddd; border-radius: 12px;">
+                        <option value="New">Condition: New</option>
+                        <option value="Used">Condition: Used</option>
+                    </select>
+                    <select id="itemLoc" style="flex: 1; padding: 1rem; border: 1px solid #ddd; border-radius: 12px;">
+                        <option value="Gulgasht">Gulgasht</option>
+                        <option value="Cantt">Cantt</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary" style="width: 100%;" onclick="goToStep(3)">Next Step</button>
+            </div>
+            <div id="uploadStep3" style="display: none;">
+                <textarea id="itemWants" placeholder="What do you want in return? (e.g. Jacket)" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1rem; height: 80px;"></textarea>
+                <input type="number" id="itemPrice" placeholder="Price (RS)" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 1.5rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.2rem;">Post Item FREE</button>
+            </div>
         </form>
     </div>
 </div>
@@ -903,12 +948,15 @@
     <i class="fas fa-sync floating-element" style="bottom: 20%; right: 10%; font-size: 3.5rem; animation-delay: 3s;"></i>
 
     <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
-        <h1><span>Premium Circular Fashion</span>Renew Your Style,<br>Respect the Planet.</h1>
-        <p>Tabadla is Multan's first premium circular fashion hub. Swap unstitched lawn, luxury wear, and vintage gems effortlessly.</p>
+        <h1><span>MULTAN'S #1 MARKETPLACE</span>Apni purani cheezen bechein ya exchange karein.</h1>
+        <p>Kapray, shoes, bags — upload karein aur turant buyers paayein. Join Multan's fastest growing swap community.</p>
         
         <div class="search-bar-glass">
-            <input type="text" id="heroSearchInput" placeholder="Search by brand, size, or location...">
+            <input type="text" id="heroSearchInput" placeholder="Search for lawn, electronics, or vintage items...">
             <button onclick="handleHeroSearch()">Explore Now</button>
+        </div>
+        <div style="margin-top: 2rem;">
+            <button class="btn btn-primary" onclick="openModal('addListingModal')" style="padding: 1.2rem 2.5rem; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(255,127,80,0.4);">Post Your Item FREE <i class="fas fa-plus-circle"></i></button>
         </div>
         <div class="trending-searches">
             <span>Trending:</span>
@@ -1111,11 +1159,15 @@
         <!-- Mock Card 1 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="100">
             <div class="listing-img">
-                <span class="badge-trending">Trending</span>
+                <div style="position: absolute; top: 15px; left: 15px; z-index: 5; display: flex; flex-direction: column; gap: 5px;">
+                    <span class="badge-trending">Trending</span>
+                    <span class="badge-type"><i class="fas fa-sync"></i> Swap Available</span>
+                </div>
                 <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Dress" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Lawn Collection - Unstitched</div>
+                <div class="interest-hook"><i class="fas fa-fire"></i> 8 people interested</div>
                 <div class="listing-meta">
                     <div class="listing-price">Swap</div>
                     <div class="star-rating"><i class="fas fa-star"></i> 4.9</div>
@@ -1141,11 +1193,15 @@
         <!-- Mock Card 2 -->
         <div class="listing-card" data-aos="fade-up" data-aos-delay="200">
             <div class="listing-img">
-                <span class="badge-new">Just Listed</span>
+                <div style="position: absolute; top: 15px; left: 15px; z-index: 5; display: flex; flex-direction: column; gap: 5px;">
+                    <span class="badge-new">Just Listed</span>
+                    <span class="badge-type"><i class="fas fa-dollar-sign"></i> Fixed Price</span>
+                </div>
                 <img src="https://images.unsplash.com/photo-1539109132382-381bb3f1c2b3?auto=format&fit=crop&w=400&q=80" alt="Jacket" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="listing-content">
                 <div class="listing-title">Premium Denim Jacket</div>
+                <div class="interest-hook"><i class="fas fa-clock"></i> Posted 2 hours ago</div>
                 <div class="listing-meta">
                     <div class="listing-price">RS. 2,500</div>
                     <div class="star-rating"><i class="fas fa-star"></i> 4.7</div>
@@ -1513,6 +1569,19 @@
         soldTag.innerText = "SWAPPED";
         parent.appendChild(soldTag);
         showToast('Item marked as Swapped!');
+    }
+
+    function goToStep(step) {
+        [1,2,3].forEach(s => {
+            document.getElementById(`uploadStep${s}`).style.display = (s === step) ? 'block' : 'none';
+            document.getElementById(`sc${s}`).classList.toggle('active', s <= step);
+        });
+    }
+
+    function findSwapMatches(wants) {
+        if (!wants) return;
+        setSearch(wants);
+        showToast(`Showing matches for: ${wants}`);
     }
 
     // Modal Logic
