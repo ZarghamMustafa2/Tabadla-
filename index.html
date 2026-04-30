@@ -13,19 +13,17 @@
             --secondary-coral: #FF7F50;
             --accent-gold: #D4AF37;
             --dark-charcoal: #121212;
-            --pearl-white: #F8F9FA;
-            --bg-off-white: #F4F4F4;
-            --text-slate: #2D3436;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --luxury-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            --inner-glow: inset 0 0 20px rgba(255,255,255,0.5);
+            --obsidian: #0a0a0a;
+            --glass-white: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --luxury-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            --inner-glow: inset 0 0 20px rgba(255,255,255,0.05);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background-color: var(--bg-off-white); 
-            color: var(--text-slate); 
+            background-color: var(--obsidian); 
+            color: #fff; 
             font-family: 'Outfit', sans-serif; 
             line-height: 1.6; 
             overflow-x: hidden; 
@@ -34,7 +32,7 @@
         h1, h2, h3, .luxury-text { font-family: 'Playfair Display', serif; }
 
         .site-header {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
             position: sticky;
@@ -44,7 +42,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
 
         .logo img { height: 75px; width: auto; display: block; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1)); }
@@ -85,51 +83,50 @@
         }
 
         .hero {
-            padding: 10rem 5%;
+            padding: 12rem 5%;
             text-align: center;
-            background: #004d4d;
-            background: radial-gradient(at 0% 0%, #008080 0, transparent 50%), 
-                        radial-gradient(at 50% 0%, #004d4d 0, transparent 50%), 
-                        radial-gradient(at 100% 0%, #FF7F50 0, transparent 50%);
-            background-size: 200% 200%;
-            animation: mesh-flow 15s ease infinite;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
             color: white;
-            border-radius: 0 0 100px 100px;
             margin-bottom: 5rem;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 80vh;
+            min-height: 100vh;
         }
 
-        @keyframes mesh-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.1;
-            z-index: 1;
-        }
-
-        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
         .hero h1 { 
-            font-size: 4.5rem; 
+            font-size: clamp(3.5rem, 10vw, 6rem); 
             font-weight: 700; 
             margin-bottom: 1.5rem; 
-            letter-spacing: -2px; 
-            line-height: 1; 
-            font-style: italic;
+            letter-spacing: -3px; 
+            line-height: 0.9; 
+            background: linear-gradient(180deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .hero h1 span { color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-style: normal; display: block; font-size: 1.5rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.8; }
-        .hero p { font-size: 1.4rem; font-weight: 300; opacity: 0.9; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero h1 span { 
+            color: var(--accent-gold); 
+            font-family: 'Outfit', sans-serif; 
+            -webkit-text-fill-color: initial;
+            display: block; 
+            font-size: 1.2rem; 
+            letter-spacing: 10px; 
+            text-transform: uppercase; 
+            margin-bottom: 1.5rem; 
+            opacity: 0.8; 
+        }
+        .hero p { 
+            font-size: 1.4rem; 
+            font-weight: 300; 
+            color: #aaa;
+            margin-bottom: 3.5rem; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            letter-spacing: 1px;
+        }
 
         .floating-element {
             position: absolute;
@@ -178,6 +175,39 @@
             transition: 0.3s;
         }
 
+        .cat-pills {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 2rem 5%;
+            scrollbar-width: none;
+            justify-content: center;
+            background: #050505;
+        }
+        .cat-pills::-webkit-scrollbar { display: none; }
+
+        .pill {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: 0.4s;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .pill.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
         .search-bar-glass button:hover { transform: scale(1.05); background: #ff6b3d; }
 
         .trending-searches {
@@ -221,66 +251,72 @@
         }
 
         .listing-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(15px);
+            background: var(--glass-white);
+            backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            border-radius: 35px;
+            border-radius: 40px;
             overflow: hidden;
             box-shadow: var(--luxury-shadow);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
         }
 
-        .listing-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            box-shadow: var(--inner-glow);
-            pointer-events: none;
-            border-radius: 35px;
+        .listing-card:hover { 
+            transform: translateY(-20px) scale(1.02); 
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        .listing-card:hover { 
-            transform: translateY(-20px) scale(1.03); 
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary-coral);
-            background: rgba(255, 255, 255, 0.85);
+        .listing-img {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .listing-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .listing-card:hover .listing-img img {
+            transform: scale(1.1);
         }
 
         .listing-content {
-            padding: 1.5rem;
+            padding: 2.5rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.5) 100%);
         }
 
         .listing-title {
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-slate);
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+            letter-spacing: -0.5px;
         }
 
         .listing-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .listing-price {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            color: var(--primary-teal);
+            color: var(--accent-gold);
         }
 
         .listing-location {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #888;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         .listing-time {
@@ -430,20 +466,23 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.9);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(20px);
         }
         .modal-content {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 30px;
+            background: #0a0a0a;
+            border: 1px solid var(--glass-border);
+            padding: 4rem;
+            border-radius: 50px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            color: #fff;
+            box-shadow: 0 50px 150px rgba(0,0,0,0.8);
         }
         .close-modal {
             position: absolute;
@@ -949,11 +988,11 @@
 
     <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
         <h1><span>MULTAN'S #1 MARKETPLACE</span>Apni purani cheezen bechein ya exchange karein.</h1>
-        <p>Kapray, shoes, bags — upload karein aur turant buyers paayein. Join Multan's fastest growing swap community.</p>
+        <p>Kapray, shoes, bags — upload karein aur forren buyers paayein. Join Multan's fastest growing swap community.</p>
         
-        <div class="search-bar-glass">
-            <input type="text" id="heroSearchInput" placeholder="Search for lawn, electronics, or vintage items...">
-            <button onclick="handleHeroSearch()">Explore Now</button>
+        <div class="search-bar-glass" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            <input type="text" id="heroSearchInput" placeholder="Search for luxury items, categories or locations..." style="color: #fff;">
+            <button onclick="handleHeroSearch()" style="background: #fff; color: #000;">Explore Now</button>
         </div>
         <div style="margin-top: 2rem;">
             <button class="btn btn-primary" onclick="openModal('addListingModal')" style="padding: 1.2rem 2.5rem; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(255,127,80,0.4);">Post Your Item FREE <i class="fas fa-plus-circle"></i></button>
@@ -1127,24 +1166,21 @@
         </div>
     </div>
 
-    <!-- Impact Tracker -->
-    <div class="impact-section" style="background: var(--dark-charcoal); color: white; border-radius: 60px; overflow: hidden; position: relative;">
-        <div style="position: absolute; top: 0; right: 0; width: 40%; height: 100%; background: linear-gradient(to left, rgba(0, 128, 128, 0.2), transparent); pointer-events: none;"></div>
-        <div style="padding: 4rem; position: relative; z-index: 2;">
-            <h2 style="font-size: 3rem; margin-bottom: 1.5rem;" class="luxury-text">Our Shared Impact</h2>
-            <p style="opacity: 0.7; margin-bottom: 3rem; max-width: 500px;">Every swap on Tabadla saves precious resources. Join thousands of Multanis making a difference.</p>
-            <div class="impact-stats">
-                <div class="stat-box" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 3.5rem; color: var(--secondary-coral); margin-bottom: 0.5rem;" class="counter" data-target="14250">14k+</h3>
-                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">Liters of Water Saved</p>
+    <div class="impact-section">
+        <div class="container">
+            <h2 style="font-size: 3rem; margin-bottom: 4rem;" class="luxury-text">Our Global Impact</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem;">
+                <div class="stat-box">
+                    <span class="counter" data-target="2500">2,500</span>
+                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.6;">Liters Water Saved</p>
                 </div>
-                <div class="stat-box" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 3.5rem; color: var(--primary-teal); margin-bottom: 0.5rem;" class="counter" data-target="450">450+</h3>
-                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">Items Exchanged</p>
+                <div class="stat-box">
+                    <span class="counter" data-target="450">450</span>
+                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.6;">Items Exchanged</p>
                 </div>
-                <div class="stat-box" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 0.5rem;" class="counter" data-target="120">120+</h3>
-                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700;">Happy Swappers</p>
+                <div class="stat-box">
+                    <span class="counter" data-target="120">120</span>
+                    <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.6;">Happy Swappers</p>
                 </div>
             </div>
         </div>
